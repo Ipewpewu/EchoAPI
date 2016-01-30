@@ -89,7 +89,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Models\Enums\CardTypes.cs" />
     <Compile Include="Models\Enums\OutputSpeechTypes.cs" />
-    <Compile Include="Utlities\JsonCreationConverter.cs" />
+    <Compile Include="Utilities\JsonCreationConverter.cs" />
     <Compile Include="Controllers\EchoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -99,6 +99,7 @@
     <Compile Include="Models\Enums\RequestTypes.cs" />
     <Compile Include="Models\Requests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Services.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
