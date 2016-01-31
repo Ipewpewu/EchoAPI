@@ -9,11 +9,7 @@ namespace EchoAPI.Utilities
 {
     public class ServiceSettings : ConfigurationElement
     {
-        [ConfigurationProperty("id", IsRequired = true)]
-        public string Id
-        {
-            get { return (string)this["id"]; }
-        }
+
         [ConfigurationProperty("name", IsRequired = true)]
         public string Name
         {
@@ -69,6 +65,28 @@ namespace EchoAPI.Utilities
                     BaseRemoveAt(index);
                 }
                 BaseAdd(index, value);
+            }
+        }
+        public new ServiceSettings this[string serviceName]
+        {
+            get
+            {
+                var element = elements.FirstOrDefault(x => x.Name == serviceName);
+                if (element != null)
+                    return (ServiceSettings)BaseGet(elements.IndexOf(element));
+                return null;
+            }
+            set
+            {
+                var element = elements.FirstOrDefault(x => x.Name == serviceName);
+                if (element != null)
+                {
+                    var index = elements.IndexOf(element);
+                    BaseRemoveAt(index);
+                    BaseAdd(index, value);
+                }
+                else
+                    BaseAdd(value);
             }
         }
         protected override ConfigurationElement CreateNewElement()

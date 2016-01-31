@@ -22,6 +22,9 @@ namespace EchoAPI.Controllers
         {
             try
             {
+                var intent = IntentsSettings.IntentsCollection[echoRequest.session.application.applicationId];
+                var service = ServicesSettings.ServicesCollection[intent.Service];
+
                 //test data for round trip
                 var response = new EchoResponse();
                 response.version = "1.0.1";
@@ -30,7 +33,7 @@ namespace EchoAPI.Controllers
                 response.response.outputSpeech = new EchoResponse.Response.OutputSpeech();
                 response.response.outputSpeech.type = OutputSpeechType.PlainText;
                 response.response.outputSpeech.text = "Hey! What's Going On.";
-                response.sessionAttributes = ServicesSettings.ServicesCollection[0];
+                response.sessionAttributes = service;
 
                 response.response.card = new EchoResponse.Response.Card();
                 response.response.card.type = CardType.Simple;

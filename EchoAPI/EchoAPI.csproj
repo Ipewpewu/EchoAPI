@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NestAPI</RootNamespace>
-    <AssemblyName>NestAPI</AssemblyName>
+    <RootNamespace>EchoAPI</RootNamespace>
+    <AssemblyName>EchoAPI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -89,6 +89,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Models\Enums\CardTypes.cs" />
     <Compile Include="Models\Enums\OutputSpeechTypes.cs" />
+    <Compile Include="Utilities\RequestRouter.cs" />
+    <Compile Include="Utilities\Intents.cs" />
     <Compile Include="Utilities\JsonCreationConverter.cs" />
     <Compile Include="Controllers\EchoController.cs" />
     <Compile Include="Global.asax.cs">
