@@ -7,8 +7,8 @@ using System.Web.Http;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using EchoAPI.Models;
-using EchoAPI.Models.Enums;
+using EchoModelsLibrary.Models;
+using EchoModelsLibrary.Models.Enums;
 using System.Configuration;
 using EchoAPI.Utilities;
 
@@ -18,39 +18,41 @@ namespace EchoAPI.Controllers
     {
         
         [HttpPost]
-        public dynamic Post(EchoRequest echoRequest)
+        public EchoResponse Post(EchoRequest echoRequest)
         {
             try
-            {
-                var intent = IntentsSettings.IntentsCollection[echoRequest.session.application.applicationId];
-                var service = ServicesSettings.ServicesCollection[intent.Service];
+            {               
+                var router = new RequestRouter();
+                var response = router.RouteRequest(echoRequest);
 
-                //test data for round trip
-                var response = new EchoResponse();
-                response.version = "1.0.1";
-                response.response = new EchoResponse.Response();
-                response.response.shouldEndSession = true;
-                response.response.outputSpeech = new EchoResponse.Response.OutputSpeech();
-                response.response.outputSpeech.type = OutputSpeechType.PlainText;
-                response.response.outputSpeech.text = "Hey! What's Going On.";
-                response.sessionAttributes = service;
+                if (response is EchoResponse)
+                    return response;
+                else
+                {
+                    var defaultResponse = new EchoResponse();
+                    defaultResponse.version = "1.0.1";
+                    defaultResponse.response = new EchoResponse.Response();
+                    defaultResponse.response.shouldEndSession = true;
+                    defaultResponse.response.outputSpeech = new EchoResponse.Response.OutputSpeech();
+                    defaultResponse.response.outputSpeech.type = OutputSpeechType.PlainText;
+                    defaultResponse.response.outputSpeech.text = response;
 
-                response.response.card = new EchoResponse.Response.Card();
-                response.response.card.type = CardType.Simple;
-                response.response.card.title = "TestCard";
-                response.response.card.content = "Testing 1 2 3";
-                //response.response.reprompt = new EchoResponse.Response.Reprompt();
-                //response.response.reprompt.outputSpeech = new EchoResponse.Response.OutputSpeech();
-                //response.response.reprompt.outputSpeech.type = "PlainText";
-                //response.response.reprompt.outputSpeech.text = "Say what!";
+                    return defaultResponse;
+                }
 
-                return JObject.FromObject(response);
             }
             catch (Exception ex)
             {
-                return ex.Message;
-            }
-            
+                var defaultResponse = new EchoResponse();
+                defaultResponse.version = "1.0.1";
+                defaultResponse.response = new EchoResponse.Response();
+                defaultResponse.response.shouldEndSession = true;
+                defaultResponse.response.outputSpeech = new EchoResponse.Response.OutputSpeech();
+                defaultResponse.response.outputSpeech.type = OutputSpeechType.PlainText;
+                defaultResponse.response.outputSpeech.text = string.Format("ECHO Exception! {0} - {1}", ex.Message, ex.StackTrace);
+
+                return defaultResponse;
+            }            
         }
     }
 }

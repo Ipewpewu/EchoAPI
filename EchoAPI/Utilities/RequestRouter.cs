@@ -1,6 +1,9 @@
-﻿using EchoAPI.Models;
+﻿using EchoModelsLibrary.Models;
 using System.Net.Http;
-using EchoAPI.Models.Enums;
+using EchoModelsLibrary.Models.Enums;
+using System.Linq;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace EchoAPI.Utilities
 {
@@ -8,10 +11,12 @@ namespace EchoAPI.Utilities
     {
         public dynamic RouteRequest(EchoRequest echoRequest)
         {
-            var intent = IntentsSettings.IntentsCollection[echoRequest.session.application.applicationId];
-            var service = ServicesSettings.ServicesCollection[intent.Service];
-
-            var url = string.Format(service.Url, service.Port, intent.Name);
+            string url;
+            using (var dbo = new EchoEntities())
+            {
+                var intent = dbo.Intents.Include("Service").First(x => x.ApplicationId == echoRequest.session.application.applicationId && x.Active);
+                url = string.Format(intent.Service.BaseUrl, intent.Service.Port, intent.Name);
+            }                
 
             var client = new HttpClient();
 
@@ -19,7 +24,9 @@ namespace EchoAPI.Utilities
             switch (echoRequest.request.type)
             {
                 case RequestType.IntentRequest:
-                    response = client.PostAsync(url, ((IntentRequest)echoRequest.request).intent.slots).Result;
+                    var jobject = JsonConvert.SerializeObject(((IntentRequest)echoRequest.request).intent.slots);
+                    var content = new StringContent(jobject, Encoding.UTF8, "application/json");
+                    response = client.PostAsync(url, content).Result;
                     break;
                 case RequestType.LaunchRequest:
                     response = client.GetAsync(url).Result;
@@ -30,7 +37,13 @@ namespace EchoAPI.Utilities
             }
 
             //TODO: success/fail handling and create a standard response object to map to EchoResponseObject
-            return response.Content;
+
+            var echoReponse = JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result) as EchoResponse;
+
+            if (echoReponse != null)
+                return echoReponse;
+
+            return response.Content.ReadAsStringAsync().Result;
         }
 
     }

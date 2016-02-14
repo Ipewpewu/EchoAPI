@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoAPI", "EchoAPI\EchoAPI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoAPI.Tests", "EchoAPI.Tests\EchoAPI.Tests.csproj", "{C4BBC2A2-E752-4E55-9E6A-54FC2E93E8CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoModelsLibrary", "EchoModelsLibrary\EchoModelsLibrary.csproj", "{ADE0F60A-1427-41B9-ADA2-67AB8029D5F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C4BBC2A2-E752-4E55-9E6A-54FC2E93E8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4BBC2A2-E752-4E55-9E6A-54FC2E93E8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4BBC2A2-E752-4E55-9E6A-54FC2E93E8CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADE0F60A-1427-41B9-ADA2-67AB8029D5F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADE0F60A-1427-41B9-ADA2-67AB8029D5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADE0F60A-1427-41B9-ADA2-67AB8029D5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADE0F60A-1427-41B9-ADA2-67AB8029D5F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

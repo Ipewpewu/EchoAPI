@@ -36,13 +36,22 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -53,6 +62,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -82,29 +93,60 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EchoModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EchoModel.edmx</DependentUpon>
+      <LastGenOutput>EchoModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="EchoModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EchoModel.edmx</DependentUpon>
+      <LastGenOutput>EchoModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Models\Enums\CardTypes.cs" />
-    <Compile Include="Models\Enums\OutputSpeechTypes.cs" />
+    <Compile Include="EchoModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EchoModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EchoModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EchoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EchoModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EchoModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Intent.cs">
+      <DependentUpon>EchoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service.cs">
+      <DependentUpon>EchoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\RequestRouter.cs" />
     <Compile Include="Utilities\Intents.cs" />
-    <Compile Include="Utilities\JsonCreationConverter.cs" />
     <Compile Include="Controllers\EchoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EchoRequest.cs" />
-    <Compile Include="Models\EchoResponse.cs" />
-    <Compile Include="Models\Enums\RequestTypes.cs" />
-    <Compile Include="Models\Requests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Services.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <EntityDeploy Include="EchoModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EchoModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="EchoModel.edmx.diagram">
+      <DependentUpon>EchoModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -116,6 +158,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Attributes\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EchoModelsLibrary\EchoModelsLibrary.csproj">
+      <Project>{ade0f60a-1427-41b9-ada2-67ab8029d5f6}</Project>
+      <Name>EchoModelsLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

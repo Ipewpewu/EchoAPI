@@ -1,15 +1,15 @@
-﻿using EchoAPI.Models.Enums;
+﻿using EchoModelsLibrary.Models.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EchoAPI.Utilities;
+using EchoModelsLibrary.Utilities;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
 
-namespace EchoAPI.Models
+namespace EchoModelsLibrary.Models
 {
     [JsonConverter(typeof(RequestConverter))]
     public abstract class Request

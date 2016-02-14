@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EchoAPI.Utilities
+namespace EchoModelsLibrary.Utilities
 {
     public abstract class JsonCreationConverter<T> : JsonConverter
     {

@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace EchoAPI.Models.Enums
+namespace EchoModelsLibrary.Models.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum OutputSpeechType
+    public enum CardType
     {
-        PlainText,
-        SSML
+        Simple,
+        LinkAccount
     }
 }

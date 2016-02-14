@@ -1,6 +1,6 @@
-﻿using EchoAPI.Models.Enums;
+﻿using EchoModelsLibrary.Models.Enums;
 
-namespace EchoAPI.Models
+namespace EchoModelsLibrary.Models
 {
     public partial class EchoResponse
     {
