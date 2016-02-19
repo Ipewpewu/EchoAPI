@@ -11,10 +11,11 @@ namespace EchoAPI.Utilities
     {
         public dynamic RouteRequest(EchoRequest echoRequest)
         {
+            //TODO: handling of different intent types
             string url;
             using (var dbo = new EchoEntities())
             {
-                var intent = dbo.Intents.Include("Service").First(x => x.ApplicationId == echoRequest.session.application.applicationId && x.Active);
+                var intent = dbo.Intents.Include("Service").First(x => x.Name == ((IntentRequest)echoRequest.request).intent.name &&  x.ApplicationId == echoRequest.session.application.applicationId && x.Active);
                 url = string.Format(intent.Service.BaseUrl, intent.Service.Port, intent.Name);
             }                
 
